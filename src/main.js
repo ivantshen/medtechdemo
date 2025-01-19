@@ -1,6 +1,5 @@
 import './style.css'
 import * as THREE from 'three';
-import { OrbitControls, PLYLoader } from 'three/examples/jsm/Addons.js';
 import questions from './basicDataset.json';
 /**
  * vars
@@ -120,10 +119,6 @@ const defeatSFX =  new THREE.Audio(listener);
 const clock = new THREE.Clock();
 
 
-/**
- * controls
-*/
-const controls = new OrbitControls(camera,renderer.domElement);
 /**
  * ground
  */
@@ -742,7 +737,6 @@ function animate() {
     boundingSpherePlayer.center.y=0;
     player.material.color.set(0x44f2d5);
   }
-  controls.update();
   updateProjectiles(deltaTime);
   var xUpd = 0;
   var zUpd = 0;
