@@ -181,7 +181,7 @@ h2{
     bottom: 20px; /* Distance from the bottom */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust for its own width */
-    width: 60px; /* Initial width */
+    width: 80px; /* Initial width */
     transition: transform 0.3s ease; /* Smooth transition for scaling */
 }
 #bottomFlashcard{
@@ -209,4 +209,16 @@ h2{
 }
 #answerReminder{
   font-size: small;
+}
+#joystick {
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+  #joystick {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    z-index: 1;
+    display: block;
+  }
 }

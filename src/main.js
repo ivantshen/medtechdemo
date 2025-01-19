@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three';
 import questions from './basicDataset.json';
+import nipplejs from 'nipplejs';
 /**
  * vars
  */
@@ -273,6 +274,8 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
   keys[event.code] = false;
 });
+
+
 const imageButton=document.getElementById('expandableImage');
 imageButton.addEventListener('click', ()=>{
   if(currentLives>0&&!takingQuiz){
@@ -705,6 +708,29 @@ audioLoader.load('/sounds/unluckyV4.ogg', function(buffer) {
     unluckyV4OST.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
 
+
+const joystick = nipplejs.create({
+  zone: document.getElementById('joystick'), // Joystick will be placed inside the #joystick div
+  mode: 'static',
+  position: { top: '80%', left: '50%' },
+  size: 150,
+  color: 'blue'
+});
+
+let joystickDir =null;
+let usingJoyStick = false
+
+joystick.on('move', function (evt, data) {
+  joystickDir = data.direction;
+  usingJoyStick=true;
+});
+
+joystick.on('end', function () {
+  usingJoyStick=false;
+  joystickDir=null;
+  // Optional: Return the cube to its original position or stop movement
+});
+
 updateTimeLeft(0);
 window.checkAnswer = checkAnswer;
 window.viewResults = viewResults;
@@ -794,23 +820,23 @@ function animate() {
   updateProjectiles(deltaTime);
   var xUpd = 0;
   var zUpd = 0;
-  if(keys['KeyW']||keys['ArrowUp']){
+  if(keys['KeyW']||keys['ArrowUp']||(joystickDir&&joystickDir.angle=='up')){
     zUpd+=-moveSpeed;
   }
-  if(keys['KeyA']||keys['ArrowLeft']){
+  if(keys['KeyA']||keys['ArrowLeft']||(joystickDir&&joystickDir.angle=='left')){
     xUpd+=-moveSpeed;
   }
-  if(keys['KeyS']||keys['ArrowDown']){
+  if(keys['KeyS']||keys['ArrowDown']||(joystickDir&&joystickDir.angle=='down')){
     zUpd+=moveSpeed;
   }
-  if(keys['KeyD']||keys['ArrowRight']){
+  if(keys['KeyD']||keys['ArrowRight']||(joystickDir&&joystickDir.angle=='right')){
     xUpd+=moveSpeed;
   }
   if(xUpd!=0&&zUpd!=0){
     xUpd *=0.707;
     zUpd *=0.707;
   }
-  if(timeLeft>0&&currentLives>0&&(keys['KeyW']||keys['ArrowUp']||keys['KeyA']||keys['ArrowLeft']||keys['KeyS']||keys['ArrowDown']||keys['KeyD']||keys['ArrowRight'])){
+  if(timeLeft>0&&currentLives>0&&((keys['KeyW']||keys['ArrowUp']||keys['KeyA']||keys['ArrowLeft']||keys['KeyS']||keys['ArrowDown']||keys['KeyD']||keys['ArrowRight']))||usingJoyStick){
     if(player.position.x+xUpd*deltaTime>-10&&player.position.x+xUpd*deltaTime<10){
       player.position.x +=xUpd*deltaTime;
     }
