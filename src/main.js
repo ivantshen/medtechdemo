@@ -559,106 +559,106 @@ function resetGame(){
   curSound.play();
 }
 
-audioLoader.load('./src/sounds/linesV1.ogg', (buffer) => {
+audioLoader.load('./public/sounds/linesV1.ogg', (buffer) => {
   stage0V0OST.setBuffer(buffer);
   stage0V0OST.setLoop(true);
   stage0V0OST.setVolume(0.35);
-  loadManager.itemEnd('./src/sounds/linesV1.ogg');
+  loadManager.itemEnd('./public/sounds/linesV1.ogg');
 });
 
-audioLoader.load('./src/sounds/linesV2.ogg', (buffer) => {
+audioLoader.load('./public/sounds/linesV2.ogg', (buffer) => {
   stage0V1OST.setBuffer(buffer);
   stage0V1OST.setLoop(true);
   stage0V1OST.setVolume(0.35);
-  loadManager.itemEnd('./src/sounds/linesV1.ogg');
+  loadManager.itemEnd('./public/sounds/linesV1.ogg');
 });
 
-audioLoader.load('./src/sounds/dronesV1.ogg', (buffer) => {
+audioLoader.load('./public/sounds/dronesV1.ogg', (buffer) => {
   stage1V0OST.setBuffer(buffer);
   stage1V0OST.setLoop(true);
   stage1V0OST.setVolume(0.4);
 });
 
-audioLoader.load('./src/sounds/dronesV2.ogg', (buffer) => {
+audioLoader.load('./public/sounds/dronesV2.ogg', (buffer) => {
   stage1V1OST.setBuffer(buffer);
   stage1V1OST.setLoop(true);
   stage1V1OST.setVolume(0.4);
 });
 
-audioLoader.load('./src/sounds/toWarV1.ogg', (buffer) => {
+audioLoader.load('./public/sounds/toWarV1.ogg', (buffer) => {
   stage2V0OST.setBuffer(buffer);
   stage2V0OST.setLoop(true);
   stage2V0OST.setVolume(0.6);
 });
 
-audioLoader.load('./src/sounds/toWarV2.ogg', (buffer) => {
+audioLoader.load('./public/sounds/toWarV2.ogg', (buffer) => {
   stage2V1OST.setBuffer(buffer);
   stage2V1OST.setLoop(true);
   stage2V1OST.setVolume(0.6);
 });
 
-audioLoader.load('./src/sounds/RAHHHHV1.ogg', (buffer) => {
+audioLoader.load('./public/sounds/RAHHHHV1.ogg', (buffer) => {
   stage3V0OST.setBuffer(buffer);
   stage3V0OST.setLoop(true);
   stage3V0OST.setVolume(0.8);
 });
 
-audioLoader.load('./src/sounds/RAHHHHV2.ogg', (buffer) => {
+audioLoader.load('./public/sounds/RAHHHHV2.ogg', (buffer) => {
   stage3V1OST.setBuffer(buffer);
   stage3V1OST.setLoop(true);
   stage3V1OST.setVolume(0.8);
 });
-audioLoader.load('./src/sounds/electronic_life_loss.ogg', function(buffer) {
+audioLoader.load('./public/sounds/electronic_life_loss.ogg', function(buffer) {
     lifeLoss.setBuffer(buffer);
     lifeLoss.setLoop(false); // Set to true if you want looping audio
     lifeLoss.setVolume(0.5); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/cleanPop.ogg', function(buffer) {
+audioLoader.load('./public/sounds/cleanPop.ogg', function(buffer) {
     cleanPop.setBuffer(buffer);
     cleanPop.setLoop(false); // Set to true if you want looping audio
     cleanPop.setVolume(0.5); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/clock_tick.ogg', function(buffer) {
+audioLoader.load('./public/sounds/clock_tick.ogg', function(buffer) {
     clockTick.setBuffer(buffer);
     clockTick.setLoop(true); // Set to true if you want looping audio
     clockTick.setVolume(0.05); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/correctPing.ogg', function(buffer) {
+audioLoader.load('./public/sounds/correctPing.ogg', function(buffer) {
     correctPing.setBuffer(buffer);
     correctPing.setLoop(false); // Set to true if you want looping audio
     correctPing.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/wrongBeep.ogg', function(buffer) {
+audioLoader.load('./public/sounds/wrongBeep.ogg', function(buffer) {
     wrongBeep.setBuffer(buffer);
     wrongBeep.setLoop(false); // Set to true if you want looping audio
     wrongBeep.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/buttonClick.ogg', function(buffer) {
+audioLoader.load('./public/sounds/buttonClick.ogg', function(buffer) {
     keyClick.setBuffer(buffer);
     keyClick.setLoop(false); // Set to true if you want looping audio
     keyClick.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/thunder.ogg', function(buffer) {
+audioLoader.load('./public/sounds/thunder.ogg', function(buffer) {
     defeatSFX.setBuffer(buffer);
     defeatSFX.setLoop(false); // Set to true if you want looping audio
     defeatSFX.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/unluckyV1.ogg', function(buffer) {
+audioLoader.load('./public/sounds/unluckyV1.ogg', function(buffer) {
     unluckyV1OST.setBuffer(buffer);
     unluckyV1OST.setLoop(false); // Set to true if you want looping audio
     unluckyV1OST.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/unluckyV2.ogg', function(buffer) {
+audioLoader.load('./public/sounds/unluckyV2.ogg', function(buffer) {
     unluckyV2OST.setBuffer(buffer);
     unluckyV2OST.setLoop(false); // Set to true if you want looping audio
     unluckyV2OST.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/unluckyV3.ogg', function(buffer) {
+audioLoader.load('./public/sounds/unluckyV3.ogg', function(buffer) {
     unluckyV3OST.setBuffer(buffer);
     unluckyV3OST.setLoop(false); // Set to true if you want looping audio
     unluckyV3OST.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
-audioLoader.load('./src/sounds/unluckyV4.ogg', function(buffer) {
+audioLoader.load('./public/sounds/unluckyV4.ogg', function(buffer) {
     unluckyV4OST.setBuffer(buffer);
     unluckyV4OST.setLoop(false); // Set to true if you want looping audio
     unluckyV4OST.setVolume(0.4); // Set volume (0.0 to 1.0)
