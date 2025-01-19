@@ -127,9 +127,11 @@ let veinSpeedMult = 1;
 let veinSizeMult = 1;
 const textureLoader = new THREE.TextureLoader();
 const veinTexture = textureLoader.load('/veinTexture.jpg');
-veinTexture.repeat.set(7,7)
-veinTexture.wrapS = THREE.RepeatWrapping;
-veinTexture.wrapT = THREE.RepeatWrapping;
+if(!isMobileDevice()){
+  veinTexture.repeat.set(7,7)
+  veinTexture.wrapS = THREE.RepeatWrapping;
+  veinTexture.wrapT = THREE.RepeatWrapping;
+}
 const ground = new THREE.Mesh(new THREE.BoxGeometry(50, 1, 50), new THREE.MeshBasicMaterial( { color: 0xdf1200,map:veinTexture,side: THREE.DoubleSide,  } ));
 ground.position.y = -1;
 scene.add(ground);
@@ -138,9 +140,12 @@ scene.add(ground);
  * player
  */
 const bacteriaTexture = textureLoader.load('/bacteriaTex.jpg');
-bacteriaTexture.repeat.set(3,3)
-bacteriaTexture.wrapS = THREE.RepeatWrapping;
-bacteriaTexture.wrapT = THREE.RepeatWrapping;
+if(!isMobileDevice()){
+  bacteriaTexture.repeat.set(3,3)
+  bacteriaTexture.wrapS = THREE.RepeatWrapping;
+  bacteriaTexture.wrapT = THREE.RepeatWrapping;
+}
+
 const player = new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16), new THREE.MeshBasicMaterial({color: 0x14ffaa,map:bacteriaTexture}))
 const moveSpeed = 10;
 scene.add(player);
@@ -149,8 +154,7 @@ const boundingSpherePlayer = new THREE.Sphere(new THREE.Vector3(0,0,0),0.5);
  * projectiles
  */
 const projTex = textureLoader.load('/noise.png');
-projTex.wrapS = THREE.RepeatWrapping;
-projTex.wrapT = THREE.RepeatWrapping;
+
 const projectiles =[]
 const projBoundingSpheres = []
 const projectileDir = []
@@ -528,6 +532,9 @@ function crossfadeAudio(currentSound, nextSound, fadeDuration) {
     }
   }, fadeInTime / 100);
 }
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+}
 
 function getOSTByStage(stage){
   let index = randomRangeNum(1,0);
@@ -712,7 +719,7 @@ audioLoader.load('/sounds/unluckyV4.ogg', function(buffer) {
 const joystick = nipplejs.create({
   zone: document.getElementById('joystick'), // Joystick will be placed inside the #joystick div
   mode: 'static',
-  position: { top: '80%', left: '50%' },
+  position: { top: '60%', left: '50%' },
   size: 150,
   color: 'blue'
 });
@@ -742,13 +749,15 @@ renderLives();
 
 function animate() {
   var deltaTime = clock.getDelta();
-  veinTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
-  veinTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
-  bacteriaTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
-  bacteriaTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
-  projTex.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
-  projTex.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
-  veinTexture.repeat.set(7 + Math.sin(timeAlive) * 0.2*veinSizeMult, 7 + Math.cos(timeAlive) * 0.2*veinSizeMult);
+  if(!(isMobileDevice())){
+    veinTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+    veinTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+    bacteriaTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+    bacteriaTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+    projTex.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+    projTex.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+    veinTexture.repeat.set(7 + Math.sin(timeAlive) * 0.2*veinSizeMult, 7 + Math.cos(timeAlive) * 0.2*veinSizeMult);
+  }
   if(takingQuiz){
     currentSpentTimeOnQuestion+=deltaTime;
   }

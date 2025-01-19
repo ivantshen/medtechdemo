@@ -210,15 +210,16 @@ h2{
 #answerReminder{
   font-size: small;
 }
-
-#joystick {
-    display: none;
+#joystick{
+  display: none;
 }
 @media only screen and (max-width: 768px) {
   #joystick {
     position: fixed; /* Fixed positioning */
-    bottom: 15%;
-    left: 25%; /* Center horizontally */
+    width: 80px; /* Initial width */
+    bottom: 50%;
+    left: 50%; /* Center horizontally */
     z-index: 3000;
+    display: block;
   }
 }
