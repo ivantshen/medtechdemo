@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>medBulletHell</title>
+  </head>
+  <body>
+    <div id="ui">
+      <div id="life-indicator"></div>
+      <div class="clock">
+        <h1><span id="timeLeft">00:00</span></h1>
+        <div class="hand second-hand"></div>
+      </div>
+      <h2><span id="answerReminder">(F) > REGAIN TIME</span></h2>
+    </div>
+
+    <!-- Popup Quiz -->
+    <div id="quizPopup" class="popup">
+        <h2><span id="questionField"></span></h2>
+        <p id="popupQuestion">What is the capital of France?</p>
+        <p id="timeValue"></p>
+        <button id = "opA" class="button" onclick="checkAnswer('a')">A: London</button>
+        <button id = "opB" class="button" onclick="checkAnswer('b')">B: Berlin</button>
+        <button id = "opC" class="button" onclick="checkAnswer('c')">C: Paris</button>
+        <button id = "opD" class="button" onclick="checkAnswer('d')">D: Madrid</button>
+    </div>
+
+    <!-- Notification Div -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="game-over hidden">
+        <img src="./src/ratguy.png" alt="Game Over" class="game-over-image" />
+        <h2><span>GAME OVER</span></h2>
+        <p id="finalScore"><span id="scoreValue">0</span></p>
+        <button id="viewResultsButton" class="button" onclick="viewResults()">View Results</button>
+    </div>
+    
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="results hidden">
+      <h2>Results</h2>
+      <p id="timeToAnswerQuestion">Avg Time To Answer Question: <span id="avgQuestionTime">0</span></p>
+      <p id="questionsAnswered">Questions Answered: <span id="questionsCount">0</span></p>
+      <p id="correctAnswers">Correct Answers: <span id="correctCount">0</span></p>
+      <h2>Time Multiplier Weights</h2>
+      <h2>High Means Lots Wrong!</h2>
+      <p id="anatomyField">Anatomy Weight: <span id="anatomyWeight">0</span></p>
+      <p id="pharmacologyField">Pharmacology Weight: <span id="pharmacologyWeight">0</span></p>
+      <p id="pathologyField">Pathology Weight: <span id="pathologyWeight">0</span></p>
+      <button id="resetButtonResults" class="button" onclick="resetGame()">Play Again</button>
+    </div>
+
+    <div id="currentWeights">
+      <h2 id ="weightsText">Current Weights</h2>
+      <p id="curAnatomyWeight">Text Element 2</p>
+      <p id ="curPharmacologyWeight">Text Element 3</p>
+      <p id ="curPathologyWeight">Text Element 4</p>
+    </div>
+    <div id="bottomFlashcard">
+      <img id="expandableImage" src="./src/flashCardF.png" alt="Expandable Image" />
+    </div>
+    <div class="top-middle">
+      <h2 id ="timeAliveText"></h2>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

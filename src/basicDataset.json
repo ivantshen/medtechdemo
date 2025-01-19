@@ -1,0 +1,112 @@
+[
+    {
+        "index": 0,
+        "question": "What is the largest organ in the human body?",
+        "option_a": "Heart",
+        "option_b": "Liver",
+        "option_c": "Skin",
+        "option_d": "Lung",
+        "correct_option": "c",
+        "field_of_study": "Anatomy",
+        "difficulty": 0.2
+    },
+    {
+        "index": 1,
+        "question": "Which part of the brain is responsible for coordination?",
+        "option_a": "Cerebrum",
+        "option_b": "Cerebellum",
+        "option_c": "Brainstem",
+        "option_d": "Thalamus",
+        "correct_option": "b",
+        "field_of_study": "Anatomy",
+        "difficulty": 0.4
+    },
+    {
+        "index": 2,
+        "question": "What is the main function of red blood cells?",
+        "option_a": "Fight infection",
+        "option_b": "Transport oxygen",
+        "option_c": "Clot blood",
+        "option_d": "Regulate temperature",
+        "correct_option": "b",
+        "field_of_study": "Anatomy",
+        "difficulty": 0.3
+    },
+    {
+        "index": 3,
+        "question": "Which of the following is a common anticoagulant?",
+        "option_a": "Aspirin",
+        "option_b": "Ibuprofen",
+        "option_c": "Warfarin",
+        "option_d": "Acetaminophen",
+        "correct_option": "c",
+        "field_of_study": "Pharmacology",
+        "difficulty": 0.5
+    },
+    {
+        "index": 4,
+        "question": "What type of drug is used to reduce inflammation?",
+        "option_a": "Antipyretic",
+        "option_b": "Analgesic",
+        "option_c": "Corticosteroid",
+        "option_d": "Antibiotic",
+        "correct_option": "c",
+        "field_of_study": "Pharmacology",
+        "difficulty": 0.6
+    },
+    {
+        "index": 5,
+        "question": "Which medication is commonly used to treat hypertension?",
+        "option_a": "Metformin",
+        "option_b": "Lisinopril",
+        "option_c": "Simvastatin",
+        "option_d": "Atenolol",
+        "correct_option": "b",
+        "field_of_study": "Pharmacology",
+        "difficulty": 0.5
+    },
+    {
+        "index": 6,
+        "question": "What is the primary disease associated with the liver?",
+        "option_a": "Diabetes",
+        "option_b": "Hepatitis",
+        "option_c": "Asthma",
+        "option_d": "Hypertension",
+        "correct_option": "b",
+        "field_of_study": "Pathology",
+        "difficulty": 0.4
+    },
+    {
+        "index": 7,
+        "question": "Which type of cancer affects the lungs?",
+        "option_a": "Liver cancer",
+        "option_b": "Breast cancer",
+        "option_c": "Lung cancer",
+        "option_d": "Prostate cancer",
+        "correct_option": "c",
+        "field_of_study": "Pathology",
+        "difficulty": 0.3
+    },
+    {
+        "index": 8,
+        "question": "What is the most common cause of stroke?",
+        "option_a": "Blood clot",
+        "option_b": "Aneurysm",
+        "option_c": "Arteriovenous malformation",
+        "option_d": "High blood pressure",
+        "correct_option": "a",
+        "field_of_study": "Pathology",
+        "difficulty": 0.5
+    },
+    {
+        "index": 9,
+        "question": "Which condition is characterized by high blood sugar levels?",
+        "option_a": "Hypoglycemia",
+        "option_b": "Diabetes Mellitus",
+        "option_c": "Hyperthyroidism",
+        "option_d": "Hypertension",
+        "correct_option": "b",
+        "field_of_study": "Pathology",
+        "difficulty": 0.4
+    }
+]

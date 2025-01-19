@@ -1,0 +1,212 @@
+body{
+  margin: 0;
+  overflow: hidden; 
+}
+#ui{
+  margin:0;
+  position:absolute;
+  top:10px;
+  left:10px;
+}
+h1{
+  color: darkred;
+  opacity: 0.3;
+  z-index: 2;
+}
+h2{
+  color:red;
+  font-size: medium;
+  font-family: sans-serif;
+}
+.clock {
+    position: relative;
+    width: 100px; /* Base width */
+    height: 100px; /* Base height */
+    border: 8px solid #333;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.15s, height 0.15s; /* Smooth transition for resizing */
+    opacity: 0.5;
+}
+
+.hand {
+    position: absolute;
+    top:0px;
+    background-color: #333;
+    transform-origin: bottom; /* Pivot point for rotation */
+    transition: all 0.15s ease; /* Smooth transition for hand movement */
+}
+.second-hand {
+    width: 3px;
+    height: 50px; /* Length of second hand */
+    background-color: red; /* Color for visibility */
+    z-index: 1; /* Place below minute and hour hands */
+}
+
+#life-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
+#questionReminder{
+  opacity: 0;
+}
+.heart {
+  position: relative;
+  --c: red;
+  width: 30px;
+  aspect-ratio: 1;
+  background:
+   /* 1 */ radial-gradient(circle at 60% 65%,var(--c) 64%,#0000 65%) top left/50% 50%,
+   /* 2 */ radial-gradient(circle at 40% 65%,var(--c) 64%,#0000 65%) top right/50% 50%,
+   /* 3 */ conic-gradient(from -45deg at 50% 85.5%,var(--c) 90deg,#0000 0) bottom/100% 50%;
+  background-repeat: no-repeat;
+}
+.emptyHeart{
+  position: relative;
+  --c: rgb(57, 56, 56);
+  width: 30px;
+  aspect-ratio: 1;
+  background:
+   /* 1 */ radial-gradient(circle at 60% 65%,var(--c) 64%,#0000 65%) top left/50% 50%,
+   /* 2 */ radial-gradient(circle at 40% 65%,var(--c) 64%,#0000 65%) top right/50% 50%,
+   /* 3 */ conic-gradient(from -45deg at 50% 85.5%,var(--c) 90deg,#0000 0) bottom/100% 50%;
+  background-repeat: no-repeat;
+}
+
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed positioning for centering in the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the popup */
+    background: rgba(255, 255, 255, 0.413);
+    border: 2px solid #333;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 100; /* Ensure it's on top of other elements */
+    text-align: center;
+}
+.button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4caf4f66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #45a04986;
+}
+
+.notification {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed positioning */
+    bottom: 90px; /* Position from the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center the notification */
+    background-color: #aeaeae7c; /* Background color */
+    color: white; /* Text color */
+    padding: 15px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    z-index: 200; /* Ensure it's above other elements */
+    transition: opacity 0.5s ease; /* Fade effect */
+}
+
+.game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+.game-over-image {
+    width: 100%; /* Makes the image responsive */
+    max-width: 300px; /* Limit maximum width */
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none; /* Hide element by default */
+}
+.results {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+#currentWeights{
+  font-size: small;
+  position: fixed; /* Fixed positioning */
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    padding: 15px; /* Padding around the text */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+#textContainer p {
+    margin: 5px 0; /* Margin between text elements */
+    color: #333; /* Dark text color */
+    font-size: 16px; /* Font size for the text */
+}
+#weightsText{
+  color: blue;
+}
+#expandableImage {
+    position: fixed; /* Fixed positioning */
+    bottom: 20px; /* Distance from the bottom */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for its own width */
+    width: 60px; /* Initial width */
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+#bottomFlashcard{
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Background color for contrast */
+}
+.top-middle {
+  position: absolute; /* Absolute positioning */
+  top: 10px; /* Distance from the top */
+  left: 50%; /* Start at 50% of the viewport width */
+  transform: translateX(-50%); /* Center the div horizontally */
+  background-color: #f0f0f0; /* Optional background color */
+  padding: 3px 10px; /* Padding for the text */
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 5px; /* Rounded corners (optional) */
+  text-align: center; /* Center text inside the div */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  opacity: 0.5;
+}
+#timeAliveText{
+  color:green;
+}
+#answerReminder{
+  font-size: small;
+}
