@@ -216,9 +216,8 @@ h2{
 @media only screen and (max-width: 768px) {
   #joystick {
     position: fixed; /* Fixed positioning */
-    bottom: 100px;
-    left: 50%; /* Center horizontally */
-    z-index: 1;
-    display: block;
+    bottom: 15%;
+    left: 25%; /* Center horizontally */
+    z-index: 3000;
   }
 }
