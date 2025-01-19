@@ -818,9 +818,6 @@ function animate() {
       player.position.z +=zUpd*deltaTime;
     }
     boundingSpherePlayer.center.set(player.position.x,boundingSpherePlayer.center.y,player.position.z)
-    if(clockTick.isPlaying){
-      clockTick.stop();
-    }
     clockTick.play();
     updateTimeLeft(-deltaTime);
   }else if(timeLeft<=0){
