@@ -93,6 +93,7 @@ document.body.appendChild( renderer.domElement );
  */
 let curMusicStage = 0;
 let curSound;
+
 const listener = new THREE.AudioListener();
 camera.add(listener);
 const stage0V0OST = new THREE.Audio(listener);
@@ -609,8 +610,8 @@ function resetGame(){
   curSound = getOSTByStage(curMusicStage);
   curSound.play();
 }
-
-audioLoader.load('/sounds/linesV1.ogg', (buffer) => {
+if(!isMobileDevice()){
+  audioLoader.load('/sounds/linesV1.ogg', (buffer) => {
   stage0V0OST.setBuffer(buffer);
   stage0V0OST.setLoop(true);
   stage0V0OST.setVolume(0.35);
@@ -714,12 +715,13 @@ audioLoader.load('/sounds/unluckyV4.ogg', function(buffer) {
     unluckyV4OST.setLoop(false); // Set to true if you want looping audio
     unluckyV4OST.setVolume(0.4); // Set volume (0.0 to 1.0)
 });
+}
 
 
 const joystick = nipplejs.create({
   zone: document.getElementById('joystick'), // Joystick will be placed inside the #joystick div
   mode: 'static',
-  position: { top: '60%', left: '50%' },
+  position: { top: '50%', left: '50%' },
   size: 150,
   color: 'blue'
 });
@@ -845,7 +847,7 @@ function animate() {
     xUpd *=0.707;
     zUpd *=0.707;
   }
-  if(timeLeft>0&&currentLives>0&&((keys['KeyW']||keys['ArrowUp']||keys['KeyA']||keys['ArrowLeft']||keys['KeyS']||keys['ArrowDown']||keys['KeyD']||keys['ArrowRight']))||usingJoyStick){
+  if(timeLeft>0&&currentLives>0&&((keys['KeyW']||keys['ArrowUp']||keys['KeyA']||keys['ArrowLeft']||keys['KeyS']||keys['ArrowDown']||keys['KeyD']||keys['ArrowRight'])||usingJoyStick)){
     if(player.position.x+xUpd*deltaTime>-10&&player.position.x+xUpd*deltaTime<10){
       player.position.x +=xUpd*deltaTime;
     }
