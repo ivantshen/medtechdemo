@@ -747,7 +747,7 @@ window.viewResults = viewResults;
 window.resetGame = resetGame;
 updateCurWeights();
 renderLives();
-
+boundingSpherePlayer.center.set(player.position.x,boundingSpherePlayer.center.y,player.position.z);
 
 
 function animate() {
