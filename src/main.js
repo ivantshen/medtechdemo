@@ -336,7 +336,7 @@ function loseLife() {
       if(takingQuiz){
         checkAnswer('none');
       }
-      if(!isMobileDevice){
+      if(!isMobileDevice()){
         defeatSFX.play()
         curSound.stop();
         curSound = getOSTByStage(-1);
