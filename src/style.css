@@ -218,8 +218,8 @@ h2{
     position: fixed; /* Fixed positioning */
     width: 150px; /* Initial width */
     height:150px;
-    bottom: 0px;
-    left: 0px; /* Center horizontally */
+    bottom: 5%;
+    left: 10%; /* Center horizontally */
     z-index: 3000;
     display: block;
   }
