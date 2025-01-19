@@ -122,27 +122,41 @@ const clock = new THREE.Clock();
 /**
  * ground
  */
-const ground = new THREE.Mesh(new THREE.BoxGeometry(30, 1, 30), new THREE.MeshBasicMaterial( { color: 0xffffff } ));
+let veinSpeedMult = 1;
+let veinSizeMult = 1;
+const textureLoader = new THREE.TextureLoader();
+const veinTexture = textureLoader.load('/veinTexture.jpg');
+veinTexture.repeat.set(7,7)
+veinTexture.wrapS = THREE.RepeatWrapping;
+veinTexture.wrapT = THREE.RepeatWrapping;
+const ground = new THREE.Mesh(new THREE.BoxGeometry(50, 1, 50), new THREE.MeshBasicMaterial( { color: 0xdf1200,map:veinTexture,side: THREE.DoubleSide,  } ));
 ground.position.y = -1;
 scene.add(ground);
 
 /**
  * player
  */
-const player = new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16), new THREE.MeshBasicMaterial({color: 0x44f2d5}))
+const bacteriaTexture = textureLoader.load('/bacteriaTex.jpg');
+bacteriaTexture.repeat.set(3,3)
+bacteriaTexture.wrapS = THREE.RepeatWrapping;
+bacteriaTexture.wrapT = THREE.RepeatWrapping;
+const player = new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16), new THREE.MeshBasicMaterial({color: 0x14ffaa,map:bacteriaTexture}))
 const moveSpeed = 10;
 scene.add(player);
 const boundingSpherePlayer = new THREE.Sphere(new THREE.Vector3(0,0,0),0.5);
 /**
  * projectiles
  */
+const projTex = textureLoader.load('/noise.png');
+projTex.wrapS = THREE.RepeatWrapping;
+projTex.wrapT = THREE.RepeatWrapping;
 const projectiles =[]
 const projBoundingSpheres = []
 const projectileDir = []
 let projMaxZ = 12;
 let projMaxX = 12;
 const addProjectile =(xPosRange,zPosRange,travelVector,size,speed)=>{
-  const projectile = new THREE.Mesh(new THREE.SphereGeometry(size,16,16),new THREE.MeshBasicMaterial({color: 0xb00000}));
+  const projectile = new THREE.Mesh(new THREE.SphereGeometry(size,16,16),new THREE.MeshBasicMaterial({color: 0xc3d0fe, map:projTex}));
   projectile.rotation.x = -Math.PI / 2; 
   projectile.position.x = randomRangeNum(xPosRange.y,xPosRange.x);
   projectile.position.z = randomRangeNum(zPosRange.y,zPosRange.x);
@@ -180,7 +194,7 @@ const updateProjectiles = (deltaTime)=>{
 }
 
 function genRandProjectile(){
-  var randEdge = randomRangeNum(11,0);
+  var randEdge = randomRangeNum(12,0);
     if(randEdge===0){
       addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(10,10),new THREE.Vector2(Math.random()*2-1,Math.random()*1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult);
     }else if(randEdge===1){
@@ -212,18 +226,21 @@ function genRandProjectile(){
       var posZ = randomRangeNum(-10,10);
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
       addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
-    }else{
+    }else if(randEdge===11){
       var posX = -10
       var posZ = randomRangeNum(-10,10);
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
       addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
+    }else{
+      var posX = randomRangeNum(-10,10);
+      var posZ = 10;
+      var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
+      var antiDir = new THREE.Vector2(-(player.position.x-posX),-(player.position.z+posZ)).normalize();
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-posX,-posX),new THREE.Vector2(-posZ,-posZ),antiDir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult);
+      genRandProjectile();
     }
 }
-/**
- * grid helper
- */
-const gridHelper = new THREE.GridHelper(30,30);
-scene.add(gridHelper);
 /*
 ** Event listener
 */
@@ -241,6 +258,9 @@ window.addEventListener("keydown", (event) => {
   keys[event.code] = true;
   if(keys['KeyF']&&currentLives>0&&!takingQuiz){
     //flashcard quiz thing
+    if(cleanPop.isPlaying){
+      cleanPop.stop();
+    }
     cleanPop.play();
     flashcardImage.style.transform = 'translateX(-50%) scale(1.3)';
     showQuiz();
@@ -257,6 +277,9 @@ const imageButton=document.getElementById('expandableImage');
 imageButton.addEventListener('click', ()=>{
   if(currentLives>0&&!takingQuiz){
     //flashcard quiz thing
+    if(cleanPop.isPlaying){
+      cleanPop.stop();
+    }
     cleanPop.play();
     flashcardImage.style.transform = 'translateX(-50%) scale(1.3)';
     showQuiz();
@@ -296,6 +319,9 @@ function renderLives() {
 function loseLife() {
   if (currentLives > 0) {
     currentLives--;
+    if(lifeLoss.isPlaying){
+      lifeLoss.stop();
+    }
     lifeLoss.play();
     renderLives();
     if(currentLives<=0){
@@ -319,7 +345,7 @@ function showQuiz() {
   if(!takingQuiz){
     takingQuiz = true;
     currentSpentTimeOnQuestion=0;
-    var randIndex = randomRangeNum(9,0);
+    var randIndex = randomRangeNum(questions.length-1,0);
     currentQuestion.textContent = questions[randIndex].question;
     opA.textContent = questions[randIndex].option_a;
     opB.textContent = questions[randIndex].option_b;
@@ -356,25 +382,34 @@ function updateTimeLeft(amt){
   }
   timeUI.textContent = formatTime(timeLeft);
   document.querySelector('h1').style.opacity =0.6*(timeLeft/maxTime)+.4;
-  document.querySelector('.clock').style.opacity =0.3*(timeLeft/maxTime)+.3;
+  document.querySelector('.clock').style.opacity =0.3*(timeLeft/maxTime)+.5;
   document.querySelector('.second-hand').style.transform = `rotate(${((timeLeft / maxTime) * 360)}deg)`;
 }
 // Function to check the answer
 function checkAnswer(answer) {
+    if(keyClick.isPlaying){
+      keyClick.stop();
+    }
     keyClick.play();
     const popup = document.getElementById('quizPopup');
     if (answer === quizAnswer) {
         notification.style.color = "green";
         showNotification('Correct! Added ' + quizTimeToAdd.toFixed(2) + ' seconds!');
         questionsCorrect++;
+        if(correctPing.isPlaying){
+          correctPing.stop();
+        }
         correctPing.play();
-        fieldWeights[fields.indexOf(currentQuestionField)]= Math.max(Math.floor(fieldWeights[fields.indexOf(currentQuestionField)]*975)/1000,0.4);
+        fieldWeights[fields.indexOf(currentQuestionField)]= Math.max(Math.floor(fieldWeights[fields.indexOf(currentQuestionField)]*945)/1000,0.5);
         updateTimeLeft(quizTimeToAdd);
     } else {
       notification.style.color = "red";
         questionsWrong++;
+        if(wrongBeep.isPlaying){
+          wrongBeep.stop();
+        }
         wrongBeep.play();
-        fieldWeights[fields.indexOf(currentQuestionField)]= Math.min(Math.floor(fieldWeights[fields.indexOf(currentQuestionField)]*1025)/1000,1.75);
+        fieldWeights[fields.indexOf(currentQuestionField)]= Math.min(Math.floor(fieldWeights[fields.indexOf(currentQuestionField)]*1075)/1000,2.3);
         showNotification('Incorrect! Deducted ' + (quizTimeToAdd*0.5).toFixed(2) + ' seconds and generated projectile!');
         genRandProjectile();
         updateTimeLeft(-quizTimeToAdd*.5);
@@ -397,6 +432,9 @@ function showGameOverScreen() {
 }
 
 function viewResults(){
+  if(keyClick.isPlaying){
+    keyClick.stop();
+  }
   keyClick.play();
   const gameOverScreen = document.getElementById('gameOverScreen');
   gameOverScreen.classList.add('hidden');
@@ -529,6 +567,9 @@ function getOSTByStage(stage){
 }
 
 function resetGame(){
+  if(keyClick.isPlaying){
+    keyClick.stop();
+  }
   keyClick.play();
   const resultsScreen = document.getElementById('resultsScreen');
   resultsScreen.classList.add('hidden');
@@ -675,6 +716,13 @@ renderLives();
 
 function animate() {
   var deltaTime = clock.getDelta();
+  veinTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+  veinTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+  bacteriaTexture.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+  bacteriaTexture.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+  projTex.offset.x = Math.sin(timeAlive) * 0.5*veinSpeedMult; // Horizontal movement
+  projTex.offset.y = Math.cos(timeAlive) * 0.5*veinSpeedMult; // Vertical movement
+  veinTexture.repeat.set(7 + Math.sin(timeAlive) * 0.2*veinSizeMult, 7 + Math.cos(timeAlive) * 0.2*veinSizeMult);
   if(takingQuiz){
     currentSpentTimeOnQuestion+=deltaTime;
   }
@@ -690,9 +738,11 @@ function animate() {
         }, 3000); // Wait 3 seconds before crossfading
       }
       timeAliveText.style.color = getTransitionColor(rgbToHex(getComputedStyle(timeAliveText).color),"#FF0000",Math.min((timeAlive-180)/420),1);
-      globalSizeMult = Math.min(1.25+(3.75/420)*(timeAlive-180),3,5);
-      globalSpeedMult = Math.min(1.4+(5.6/420)*(timeAlive-180),7);
+      globalSizeMult = Math.min(1.45+(3.75/420)*(timeAlive-180),3,5);
+      globalSpeedMult = Math.min(1.7+(5.6/420)*(timeAlive-180),7);
       secondsBetweenSpawns=Math.max(1.75-(1.55/420)*(timeAlive-180),0.2);
+      veinSizeMult= 0.6;
+      veinSpeedMult =-0.9;
     }else if(timeAlive>90){
       if(curMusicStage===1){
         curMusicStage++;
@@ -703,9 +753,11 @@ function animate() {
         }, 3000); // Wait 3 seconds before crossfading
       }
       timeAliveText.style.color = getTransitionColor(rgbToHex(getComputedStyle(timeAliveText).color),"#000000",(timeAlive-90)/90);
-      globalSizeMult = 1.25;
-      globalSpeedMult = 1.4;
+      globalSizeMult = 1.45;
+      globalSpeedMult = 1.7;
       secondsBetweenSpawns=1.75;
+      veinSizeMult= 1.3;
+      veinSpeedMult =1.4;
     }else if(timeAlive>30){
       if(curMusicStage===0){
         curMusicStage++;
@@ -716,9 +768,11 @@ function animate() {
         }, 3000); // Wait 3 seconds before crossfading
       }
       timeAliveText.style.color = getTransitionColor(rgbToHex(getComputedStyle(timeAliveText).color),"#0000AA",(timeAlive-30)/60);
-      globalSizeMult = 1.1;
-      globalSpeedMult = 1.2;
+      globalSizeMult = 1.2;
+      globalSpeedMult = 1.4;
       secondsBetweenSpawns=2.5;
+      veinSizeMult= 1.1;
+      veinSpeedMult =-0.9;
     }
     timeAliveText.textContent = "Alive: " + formatTime(timeAlive);
   }
@@ -764,6 +818,9 @@ function animate() {
       player.position.z +=zUpd*deltaTime;
     }
     boundingSpherePlayer.center.set(player.position.x,boundingSpherePlayer.center.y,player.position.z)
+    if(clockTick.isPlaying){
+      clockTick.stop();
+    }
     clockTick.play();
     updateTimeLeft(-deltaTime);
   }else if(timeLeft<=0){
