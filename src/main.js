@@ -155,15 +155,25 @@ const boundingSpherePlayer = new THREE.Sphere(new THREE.Vector3(0,0,0),0.5);
  * projectiles
  */
 const projTex = textureLoader.load('/noise.png');
-
+if(!isMobileDevice()){
+  projTex.repeat.set(4,4);
+  projTex.wrapS = THREE.RepeatWrapping;
+  projTex.wrapT = THREE.RepeatWrapping;
+}
 const projectiles =[]
 const projBoundingSpheres = []
 const projectileDir = []
 let projMaxZ = 12;
 let projMaxX = 12;
-const addProjectile =(xPosRange,zPosRange,travelVector,size,speed)=>{
-  const projectile = new THREE.Mesh(new THREE.SphereGeometry(size,16,16),new THREE.MeshBasicMaterial({color: 0xc3d0fe, map:projTex}));
-  projectile.rotation.x = -Math.PI / 2; 
+const addProjectile =(xPosRange,zPosRange,travelVector,size,speed, type)=>{
+  let projectile = null
+  if(type===0){
+    projectile =new THREE.Mesh(new THREE.SphereGeometry(size,16,16)),new THREE.MeshBasicMaterial({color: 0xc3d0fe, map:projTex});
+  }else if(type===1){
+    projectile =new THREE.Mesh( new THREE.ConeGeometry(size*0.8,size*2,16,16)),new THREE.MeshBasicMaterial({color: 0xc3d0fe, map:projTex});
+    projectile.geometry.rotateX(Math.PI / 2);
+    projectile.lookAt(projectile.position.clone().add(new THREE.Vector3(30*travelVector.x,0,-30*travelVector.y)));
+  }
   projectile.position.x = randomRangeNum(xPosRange.y,xPosRange.x);
   projectile.position.z = randomRangeNum(zPosRange.y,zPosRange.x);
   projectileDir.push(travelVector.multiplyScalar(speed));
@@ -202,48 +212,52 @@ const updateProjectiles = (deltaTime)=>{
 function genRandProjectile(){
   var randEdge = randomRangeNum(12,0);
     if(randEdge===0){
-      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(10,10),new THREE.Vector2(Math.random()*2-1,Math.random()*1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(10,10),new THREE.Vector2(Math.random()*2-1,Math.random()*1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult, 0);
     }else if(randEdge===1){
-      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(-10,-10),new THREE.Vector2(Math.random()*2-1,Math.random*-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(-10,-10),new THREE.Vector2(Math.random()*2-1,Math.random*-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult, 0);
     }else if(randEdge===2){
-      addProjectile(new THREE.Vector2(10,10),new THREE.Vector2(-10,10),new THREE.Vector2(Math.random()*-1,Math.random()*2-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(10,10),new THREE.Vector2(-10,10),new THREE.Vector2(Math.random()*-1,Math.random()*2-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult,0);
     }else if(randEdge===3){
-      addProjectile(new THREE.Vector2(-10,-10),new THREE.Vector2(-10,10),new THREE.Vector2(Math.random()*1,Math.random()*2-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,-10),new THREE.Vector2(-10,10),new THREE.Vector2(Math.random()*1,Math.random()*2-1).normalize(), 0.25*globalSizeMult,(Math.random()*.9+.3)*globalSpeedMult,0);
     }else if(randEdge===4){
-      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(10,10),new THREE.Vector2(0,1).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(10,10),new THREE.Vector2(0,1).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult,0);
     }else if(randEdge===5){
-      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(-10,-10),new THREE.Vector2(0,-1).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,10),new THREE.Vector2(-10,-10),new THREE.Vector2(0,-1).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult,0);
     }else if(randEdge===6){
-      addProjectile(new THREE.Vector2(10,10),new THREE.Vector2(-10,10),new THREE.Vector2(-1,0).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(10,10),new THREE.Vector2(-10,10),new THREE.Vector2(-1,0).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult,0);
     }else if(randEdge===7){
-      addProjectile(new THREE.Vector2(-10,-10),new THREE.Vector2(-10,10),new THREE.Vector2(1,0).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(-10,-10),new THREE.Vector2(-10,10),new THREE.Vector2(1,0).normalize(), 0.35*globalSizeMult,(Math.random()*.2+.6)*globalSpeedMult,0);
     }else if(randEdge===8){
       var posX = randomRangeNum(-10,10);
       var posZ = 10;
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
-      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult,1);
     }else if(randEdge===9){
       var posX = randomRangeNum(-10,10);
       var posZ = -10;
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
-      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult,1);
     }else if(randEdge===10){
       var posX = 10
       var posZ = randomRangeNum(-10,10);
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
-      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult,1);
     }else if(randEdge===11){
       var posX = -10
       var posZ = randomRangeNum(-10,10);
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
-      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.15*globalSizeMult,(Math.random()*.7+.9)*globalSpeedMult,1);
     }else{
       var posX = randomRangeNum(-10,10);
       var posZ = 10;
       var dir = new THREE.Vector2((player.position.x-posX),(player.position.z+posZ)).normalize();
       var antiDir = new THREE.Vector2(-(player.position.x-posX),-(player.position.z+posZ)).normalize();
-      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult);
-      addProjectile(new THREE.Vector2(-posX,-posX),new THREE.Vector2(-posZ,-posZ),antiDir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult);
+      addProjectile(new THREE.Vector2(posX,posX),new THREE.Vector2(posZ,posZ),dir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
+      addProjectile(new THREE.Vector2(-posX,-posX),new THREE.Vector2(-posZ,-posZ),antiDir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
+      addProjectile(new THREE.Vector2(posX-2,posX-2),new THREE.Vector2(posZ,posZ),dir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
+      addProjectile(new THREE.Vector2(-posX-2,-posX-2),new THREE.Vector2(-posZ,-posZ),antiDir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
+      addProjectile(new THREE.Vector2(posX+2,posX+2),new THREE.Vector2(posZ,posZ),dir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
+      addProjectile(new THREE.Vector2(-posX+2,-posX+2),new THREE.Vector2(-posZ,-posZ),antiDir, 0.45*globalSizeMult,(Math.random()*.7+.5)*globalSpeedMult,1);
       genRandProjectile();
     }
 }
