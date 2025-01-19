@@ -590,6 +590,8 @@ function resetGame(){
   timeLeft = 3;
   globalSpeedMult = 1;
   globalSizeMult = 1;
+  veinSizeMult=1;
+  veinSpeedMult=1;
   timeAlive = 0;
   questionsCorrect = 0;
   questionsWrong = 0;
