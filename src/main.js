@@ -336,11 +336,12 @@ function loseLife() {
       if(takingQuiz){
         checkAnswer('none');
       }
-      defeatSFX.play()
-      curSound.stop();
-      curSound = getOSTByStage(-1);
-      curSound.play();
-      
+      if(!isMobileDevice){
+        defeatSFX.play()
+        curSound.stop();
+        curSound = getOSTByStage(-1);
+        curSound.play();
+      }
       showGameOverScreen();
     }
   }
