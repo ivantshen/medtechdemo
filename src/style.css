@@ -129,15 +129,14 @@ h2{
     transform: translate(-50%, -50%);
     background: white;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 3px;
+    padding: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    z-index: 1000; /* Ensure it appears above other content */
+    z-index: 200; /* Ensure it appears above other content */
 }
 .game-over-image {
-    width: 100%; /* Makes the image responsive */
-    max-width: 300px; /* Limit maximum width */
+    width:200px;
     margin-bottom: 20px;
 }
 
@@ -219,8 +218,8 @@ h2{
     width: 150px; /* Initial width */
     height:150px;
     bottom: 5%;
-    left: 10%; /* Center horizontally */
-    z-index: 3000;
+    left: 5%; /* Center horizontally */
+    z-index: 500;
     display: block;
   }
 }
