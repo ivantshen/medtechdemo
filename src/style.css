@@ -218,6 +218,7 @@ h2{
     position: fixed; /* Fixed positioning */
     bottom: 15%;
     left: 25%; /* Center horizontally */
+    transform: translateX(-50%);
     z-index: 3000;
   }
 }
