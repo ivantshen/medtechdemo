@@ -124,9 +124,9 @@ h2{
 
 .game-over {
     position: fixed;
-    bottom: 200px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     background: white;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -136,7 +136,8 @@ h2{
     z-index: 200; /* Ensure it appears above other content */
 }
 .game-over-image {
-    max-width: 200px; /* Initial width */
+    width: 100%; /* Makes the image responsive */
+    max-width: 300px; /* Limit maximum width */
     margin-bottom: 20px;
 }
 
@@ -145,9 +146,9 @@ h2{
 }
 .results {
     position: fixed;
-    bottom: 200px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     background: white;
     border: 1px solid #ccc;
     border-radius: 8px;
