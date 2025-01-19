@@ -194,7 +194,7 @@ h2{
   top: 10px; /* Distance from the top */
   left: 50%; /* Start at 50% of the viewport width */
   transform: translateX(-50%); /* Center the div horizontally */
-  background-color: #f0f0f0; /* Optional background color */
+  background-color: #462f2f; /* Optional background color */
   padding: 3px 10px; /* Padding for the text */
   border: 1px solid #ccc; /* Optional border */
   border-radius: 5px; /* Rounded corners (optional) */
@@ -215,9 +215,9 @@ h2{
 }
 @media only screen and (max-width: 768px) {
   #joystick {
-    position: absolute;
-    bottom: 50px;
-    left: 50px;
+    position: fixed; /* Fixed positioning */
+    bottom: 100px;
+    left: 50%; /* Center horizontally */
     z-index: 1;
     display: block;
   }
